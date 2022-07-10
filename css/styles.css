@@ -1,0 +1,11 @@
+.container{
+    padding-left: 20%;
+    padding-right: 10%;
+    
+}
+.dropdown{
+    position:relative;
+}
+.dropdown-menu{
+    display: block;
+}
