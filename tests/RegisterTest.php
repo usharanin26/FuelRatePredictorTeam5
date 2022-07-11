@@ -2,7 +2,7 @@
 
 // require_once 'PHPUnit/Autoload.php';
 
-class FuelQuoteTest extends PHPUnit\Framework\TestCase
+class RegisterTest extends PHPUnit\Framework\TestCase
 {
     private $http;
 
