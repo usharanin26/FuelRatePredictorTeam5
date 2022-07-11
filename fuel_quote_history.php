@@ -1,47 +1,60 @@
-<?php include('components/header.php'); ?>
-<div class="container">
-    <br /></br />
-    <form name="register" action="registration.php" method="POST">
-        <h3>Fuel Quote History</h3>
+<?php
+session_start();
+
+if (isset($_SESSION['uname'])) {
+    include('components/header.php');
+?>
+    <div class="container">
+        <br /><br />
+        <a href="backend/logout.php"><img src="images/logout_icon.png" alt="Logout" style="width:52px;height:52px; float: right"></a>
+        <a href="profile_management.php"><img src="images/profile_icon.jpg" alt="Profile Page" style="width:52px;height:52px;float: right"></a>
+        <br/>
+        <h3> Fuel Quote History</h3>
         <br />
-        <div class="form-group w-75">
-            <label for="gallons"><b>Gallons Requested</b></label>
-            <input type="number" class="form-control" id="gallons" placeholder="Gallons Requested" readonly>
-        </div>
+        
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Gallons Requested</th>
+                    <th scope="col">Delivery Address</th>
+                    <th scope="col">Delivery Date</th>
+                    <th scope="col">Suggested Price Per Gallon</th>
+                    <th scope="col">Total Amount Due</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>200</td>
+                    <td>2111 HOlly Hall St. Houston, Texas 77054</td>
+                    <td>7/6/2022</td>
+                    <td>4</td>
+                    <td>500</td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>100</td>
+                    <td>2111 Scotland yard, Houston, Texas 77054</td>
+                    <td>4/6/2022</td>
+                    <td>4</td>
+                    <td>20</td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>20</td>
+                    <td>45, Stratford, Houston, Texas 77054</td>
+                    <td>6/6/2022</td>
+                    <td>3.6</td>
+                    <td>0</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+<?php
+    include('components/footer.php');
+} else {
+    echo '<script>alert("Please Login!");window.location.href="login.php";</script>';
+}
 
-        <div class="form-group w-75">
-            <label for="delivery_address"><b>Delivery Address</b></label>
-            <textarea class="form-control" id="delivery_address" placeholder="Delivery Address" readonly></textarea>
-        </div>
-
-        <div class="form-group w-75">
-            <label for="delivery_date"><b>Delivery Date</b></label>
-            <div class="form-group">
-                <div class='input-group date' id='datetimepicker1'>
-                    <input type='text' class="form-control" readonly />
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group w-75">
-            <label for="price_per_gallon"><b>Suggested Price Per Gallon</b></label>
-            <input type="number" class="form-control" id="price_per_gallon" placeholder="0.0" readonly />
-        </div>
-        <div class="form-group w-75">
-            <label for="amount_due"><b>Total Amount Due</b></label>
-            <input type="number" class="form-control" id="amount_due" placeholder="0.0" readonly />
-        </div>
-
-
-
-    </form>
-</div>
-<script type="text/javascript">
-    $(function() {
-        $('#datetimepicker1').datetimepicker();
-    });
-</script>
-<?php include('components/footer.php'); ?>
+?>
