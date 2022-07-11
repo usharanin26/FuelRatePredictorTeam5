@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="%i">
+  <project timestamp="%i" name="FuelRatePredictor">
+    <file name="process_fuel_quote.php">
+      <line num="2" type="stmt" count="1"/>
+      <line num="11" type="stmt" count="2"/>
+      <line num="12" type="stmt" count="2"/>
+      <line num="13" type="stmt" count="1"/>
+      <line num="14" type="stmt" count="1"/>
+      <line num="16" type="stmt" count="1"/>
+      <line num="13" type="stmt" count="1"/>
+      <line num="17" type="stmt" count="2"/>
+      <line num="18" type="stmt" count="2"/>
+      <line num="19" type="stmt" count="1"/>
+      <metrics loc="22" ncloc="22" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="0" elements="5" coveredelements="4"/>
+    </file>
+    <metrics files="1" loc="22" ncloc="22" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="0" elements="5" coveredelements="4"/>
+  </project>
+</coverage>
