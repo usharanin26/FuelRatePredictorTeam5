@@ -1,4 +1,16 @@
+<script>
+    function populate_amount(){
+        gallons=document.getElementById("gallons").value;
+        price_per_gallon=document.getElementById("price_per_gallon").value;
+        document.getElementById("amount_due").value=gallons*price_per_gallon;
+
+    }
+</script>
+
 <?php
+
+use App\DBConnect;
+
 session_start();
 
 if (isset($_SESSION['uname'])) {
@@ -6,21 +18,37 @@ if (isset($_SESSION['uname'])) {
 ?>
     <div class="container">
         <br /></br />
-        <a href="backend/logout.php"><img src="images/logout_icon.png" alt="Logout" style="width:52px;height:52px; float: right"></a>
+        <a href="backend/Logout.php"><img src="images/logout_icon.png" alt="Logout" style="width:52px;height:52px; float: right"></a>
         <a href="profile_management.php"><img src="images/profile_icon.jpg" alt="Profile Page" style="width:52px;height:52px;float: right"></a>
         
 
-        <form name="register" action="backend/process_fuel_quote.php" method="POST">
+        <form name="register" action="backend/FuelQuoteForm.php" method="POST">
             <h3> Fuel Quote Form</h3>
             <br />
             <div class="form-group w-75">
                 <label for="gallons"><b>Gallons Requested*</b></label>
-                <input type="number" class="form-control" name="gallons" placeholder="Enter Number of Gallons" required>
+                <input type="number" class="form-control" id="gallons" name="gallons" onChange = "populate_amount();" placeholder="Enter Number of Gallons" required>
             </div>
 
             <div class="form-group w-75">
                 <label for="delivery_address"><b>Delivery Address</b></label>
-                <textarea class="form-control" name="delivery_address" placeholder="Delivery Address" readonly></textarea>
+                <?php
+                    require_once("backend/DBConnect.php");
+                    $connect = new DBConnect();
+                    $con = $connect->connection();
+                    $query = "SELECT * FROM profile WHERE id=(select id from user where username = ?);";
+
+                    $stmt = $con->prepare($query);
+                    try {
+                        $stmt->execute([$_SESSION['uname']]);
+                        $row = $stmt->fetch();
+                        $address = $row["address1"];
+                        echo '<textarea class="form-control" name="delivery_address" readonly>'.$address.'</textarea>';
+                    } catch (PDOException $e) {
+                        echo '<script>alert("Error in Login!");window.location.href="../login.php";</script>';
+                    }
+                ?>
+                
             </div>
 
             <div class="form-group w-75">
@@ -37,11 +65,11 @@ if (isset($_SESSION['uname'])) {
 
             <div class="form-group w-75">
                 <label for="price_per_gallon"><b>Suggested Price Per Gallon</b></label>
-                <input type="number" class="form-control" name="price_per_gallon" value=4 readonly />
+                <input type="number" class="form-control" id="price_per_gallon" name="price_per_gallon" value=4 readonly />
             </div>
             <div class="form-group w-75">
                 <label for="amount_due"><b>Total Amount Due</b></label>
-                <input type="number" class="form-control" name="amount_due" placeholder="0.0" readonly />
+                <input type="number" class="form-control" id="amount_due" name="amount_due" placeholder="0.0" readonly />
             </div>
 
             <button type="submit" name="fuel_submit" class="btn btn-success">Submit</button>

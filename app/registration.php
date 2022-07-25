@@ -5,7 +5,7 @@
 </div>
 <div class="container">
     <br /></br />
-    <form name="register" action="backend/process_register.php" method="post">
+    <form name="register" action="backend/Register.php" method="post">
         <h3> New User Registration Form</h3>
         <br />
         <div class="form-group w-75">
