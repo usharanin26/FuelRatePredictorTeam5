@@ -6,10 +6,10 @@ if (isset($_SESSION['uname'])) {
 ?>
     <div class="container">
         <br /></br />
-        <a href="backend/logout.php"><img src="images/logout_icon.png" alt="Logout" style="width:52px;height:52px; float: right"></a>
+        <a href="backend/Logout.php"><img src="images/logout_icon.png" alt="Logout" style="width:52px;height:52px; float: right"></a>
         
         <br/>
-        <form name="register" action="backend/process_profile.php" method="POST">
+        <form name="register" action="backend/ProfileManagement.php" method="POST">
             <h3> Profile</h3>
             <br />
             <div class="form-group w-75">
@@ -31,9 +31,25 @@ if (isset($_SESSION['uname'])) {
             <div class="form-group">
                 <select class="btn btn-info dropdown-toggle" name="state">
                     <option value="state">State</option>
-                    <option value="texas">TX</option>
-                    <option value="california">CN</option>
-                    <option value="newyork">NY</option>
+                    <?php
+                    require_once("backend/db.php");
+                    $query = "SELECT * FROM state;";
+
+                    $stmt = $con->prepare($query);
+                    try {
+                        $stmt->execute();
+                        $rows = $stmt->fetchAll();
+                        foreach( $rows as $row ) {
+                            $state_code=$row["state_code"];
+                            echo "<option value=$state_code>$state_code</option>";
+                        }
+            
+                        
+                    } catch (PDOException $e) {
+                        echo '<script>alert("Error in populating drop down values!");';
+                    }
+                    ?>
+                    
                 </select>
             </div>
             <div class="form-group w-75">
