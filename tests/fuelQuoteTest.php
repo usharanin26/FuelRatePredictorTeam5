@@ -37,12 +37,12 @@ class fuelQuoteTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(-1, $returnvalue, 'expected value equals actual value');
     }
 
-    public function testFuelQuoteSuccess()
+    public function testFuelQuoteInsertSuccess()
     {
         $_POST['fuel_submit'] = true;
         $_POST['gallons'] = 40;
         $_POST['delivery_address'] = 'address 1';
-        $_POST['delivery_date'] = '2022/4/5';
+        $_POST['delivery_date'] = '07/27/2022';
         $_POST['price_per_gallon'] = 3;
         $_POST['amount_due'] = 120;
 
@@ -54,5 +54,6 @@ class fuelQuoteTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals(1, $returnvalue, 'expected value equals actual value');
     }
+
         
 }
