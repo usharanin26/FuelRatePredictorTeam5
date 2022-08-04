@@ -49,19 +49,60 @@ class ProfileManagement
                 $connect = new DBConnect();
                 $con = $connect->connection();
                 $id = $this->getIdforUser($con);
-                $query = "INSERT INTO profile(id,full_name, address1, address2, city, state_code, zipcode) VALUES (?,?,?,?,?,?,?)";
-
-                $stmt = $con->prepare($query);
-                try {
-
-                    $stmt->execute([$id, $fullname, $address1, $address2, $city, $state, $zipcode]);
-                    echo '<script>alert("Profile is Successfully Updated!");window.location.href="../fuel_quote_form.php";</script>';
-                } catch (PDOException $e) {
-                    echo "error in connection!" . $e->getMessage();
-                    #echo '<script>alert("Error in Profile Update!");window.location.href="../login.php";</script>';
+                $profile_exists = $this->checkProfileExists($con, $id);
+                if ($profile_exists > 0) {
+                    $this->updateRow($con,$id, $fullname, $address1, $address2, $city, $state, $zipcode);
+                } else {
+                    $this->insertRow($con,$id, $fullname, $address1, $address2, $city, $state, $zipcode);
                 }
+
                 return 1;
             }
+        }
+    }
+
+    public function insertRow($con,$id, $fullname, $address1, $address2, $city, $state, $zipcode)
+    {
+        $query = "INSERT INTO profile(id,full_name, address1, address2, city, state_code, zipcode) VALUES (?,?,?,?,?,?,?)";
+
+        $stmt = $con->prepare($query);
+        try {
+
+            $stmt->execute([$id, $fullname, $address1, $address2, $city, $state, $zipcode]);
+            echo '<script>alert("Profile is Successfully Updated!");window.location.href="../fuel_quote_form.php";</script>';
+        } catch (PDOException $e) {
+            #echo "error in connection!" . $e->getMessage();
+            echo '<script>alert("Error in Profile Update!");window.location.href="../login.php";</script>';
+        }
+    }
+
+    public function updateRow($con,$id, $fullname, $address1, $address2, $city, $state, $zipcode)
+    {
+        $query = "update profile set full_name = ?, address1=?, address2=?, city=?, state_code=?, zipcode=? where id=?;";
+
+        $stmt = $con->prepare($query);
+        try {
+
+            $stmt->execute([$fullname, $address1, $address2, $city, $state, $zipcode, $id]);
+            echo '<script>alert("Profile is Successfully Updated!");window.location.href="../fuel_quote_form.php";</script>';
+        } catch (PDOException $e) {
+            #echo "error in connection!" . $e->getMessage();
+            echo '<script>alert("Error in Profile Update!");window.location.href="../login.php";</script>';
+        }
+    }
+
+    public function checkProfileExists($con, $id)
+    {
+        $query = "SELECT * FROM profile WHERE id=?;";
+
+        $stmt = $con->prepare($query);
+        try {
+            $stmt->execute([$id]);
+            $row_count = $stmt->rowCount();
+
+            return $row_count;
+        } catch (PDOException $e) {
+            echo '<script>alert("Error in Login!");window.location.href="../login.php";</script>';
         }
     }
 

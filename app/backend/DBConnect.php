@@ -25,7 +25,7 @@ class DBConnect
             return $con;
             
         } catch (PDOException $e) {
-            echo "error in connection!" . $e->getMessage();
+            echo '<script>alert("Error in Connection! '.$e->getMessage().'");window.location.href="../login.php";</script>';
         }
         
     }
