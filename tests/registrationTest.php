@@ -49,9 +49,9 @@ class registrationTest extends \PHPUnit\Framework\TestCase
     {
 
         $_POST['register'] = true;
-        $_POST['username'] = 'test8';
-        $_POST['password'] = 'test8';
-        $_POST['re_enter_password'] = 'test8';
+        $_POST['username'] = 'test9';
+        $_POST['password'] = 'test9';
+        $_POST['re_enter_password'] = 'test9';
         $register = new App\Register;
         $returnvalue = $register->process_register();
 

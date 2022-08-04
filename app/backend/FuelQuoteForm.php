@@ -31,6 +31,7 @@ class FuelQuoteForm
             if ($error_message != "") {
                 echo '<script>alert("' . $error_message . '");window.location.href="../fuel_quote_form.php";</script>';
             } else {
+                $delivery_date = date_format(date_create_from_format('m/d/Y', $delivery_date), 'Y-m-d');
                 $this->storeFuelQuote($gallons, $delivery_address, $delivery_date, $price_per_gallon, $amount_due);
                 echo '<script>alert("Fuel Quote Submitted Successfully!");window.location.href="../fuel_quote_history.php";</script>';
                 return 1;
