@@ -1,14 +1,17 @@
 <?php
+
+use App\DBConnect;
+
 session_start();
 
 if (isset($_SESSION['uname'])) {
     include('components/header.php');
 ?>
     <div class="container">
-        <br /></br />
+        <br /></br />        
         <a href="backend/Logout.php"><img src="images/logout_icon.png" alt="Logout" style="width:52px;height:52px; float: right"></a>
         
-        <br/>
+        <br />
         <form name="register" action="backend/ProfileManagement.php" method="POST">
             <h3> Profile</h3>
             <br />
@@ -29,27 +32,27 @@ if (isset($_SESSION['uname'])) {
                 <input type="text" class="form-control" name="city" placeholder="Enter City" maxlength="100" required>
             </div>
             <div class="form-group">
+            <label for="state"><b>State*</b></label>
                 <select class="btn btn-info dropdown-toggle" name="state">
                     <option value="state">State</option>
                     <?php
-                    require_once("backend/db.php");
+                    require_once("backend/DBConnect.php");
+                    $connect = new DBConnect();
+                    $con = $connect->connection();
                     $query = "SELECT * FROM state;";
-
                     $stmt = $con->prepare($query);
                     try {
                         $stmt->execute();
                         $rows = $stmt->fetchAll();
-                        foreach( $rows as $row ) {
-                            $state_code=$row["state_code"];
+                        foreach ($rows as $row) {
+                            $state_code = $row["state_code"];
                             echo "<option value=$state_code>$state_code</option>";
                         }
-            
-                        
                     } catch (PDOException $e) {
                         echo '<script>alert("Error in populating drop down values!");';
                     }
                     ?>
-                    
+
                 </select>
             </div>
             <div class="form-group w-75">
@@ -57,6 +60,7 @@ if (isset($_SESSION['uname'])) {
                 <input type="text" pattern="\d*" class="form-control" name="zipcode" placeholder="Enter Zip Code" minlength="5" maxlength="9">
             </div>
             <button type="submit" name="profile_submit" class="btn btn-success">Update</button>
+            <a href="fuel_quote_form.php" class="btn btn-primary" style="position: relative; left : 320px;">Fuel Quote</a>
 
         </form>
     </div>
